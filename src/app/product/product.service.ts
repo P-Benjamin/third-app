@@ -23,4 +23,10 @@ export class ProductService {
   getProducts() {
     return this.productsSubject.value;
   }
+
+  deleteProduct(id: number): void {
+    const newProductsList = this.productsSubject.value.filter((product) => product.id != id);
+    this.productsSubject.next([...newProductsList]);
+  }
+
 }

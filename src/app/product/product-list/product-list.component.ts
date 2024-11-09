@@ -17,4 +17,10 @@ export class ProductListComponent implements OnInit {
       this.products = products;
     });
   }
+
+  handleDelete(product: Product) {
+    if(confirm("Etes vous sÃ»re?"))
+      this.productService.deleteProduct(product.id);
+  }
+
 }
