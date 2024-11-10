@@ -1,0 +1,18 @@
+{
+  "products": [
+    {
+      "id": "937",
+      "name": "Product 1 ",
+      "price": 100,
+      "quantity": 100,
+      "checked": true
+    },
+    {
+      "id": "8285",
+      "name": "Product 2",
+      "price": 200,
+      "quantity": 200,
+      "checked": null
+    }
+  ]
+}

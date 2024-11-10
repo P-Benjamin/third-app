@@ -26,7 +26,7 @@ export class ProductFormComponent {
   addProduct() {
     if (this.productForm.valid) {
       const newProduct: Product = {
-        id: Math.floor(Math.random() * 10000), 
+        id: Math.floor(Math.random() * 10000).toString(), 
         ...this.productForm.value
       };
       this.productService.addProduct(newProduct);
