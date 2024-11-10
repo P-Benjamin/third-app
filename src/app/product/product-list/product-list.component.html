@@ -4,7 +4,13 @@
       <div class="card-body">
         <div>
         </div>
-      </div>            
+      </div> 
+      <input class="p-1"  type="text" [(ngModel)]="keyword">
+      <button  (click)="searchProducts()"
+              class="btn btn-outline-success ms-1">
+        <i class="bi bi-search"></i>
+      </button>
+         
       <table class="table">
         <thead>
           <tr>

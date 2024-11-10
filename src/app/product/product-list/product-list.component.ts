@@ -9,6 +9,7 @@ import { Product } from '../../model/products.model';
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  public keyword : string="";
 
   constructor(private productService: ProductService) {}
 
@@ -23,4 +24,10 @@ export class ProductListComponent implements OnInit {
       this.productService.deleteProduct(product.id);
   }
 
+  searchProducts() {
+    if(this.keyword == "") 
+      this.productService.updateList();
+    else
+    this.productService.searchProduct(this.keyword);
+  }
 }

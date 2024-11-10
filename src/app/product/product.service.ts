@@ -8,53 +8,40 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductService {
   private productsSubject = new BehaviorSubject<Product[]>([]);
-  
+
   products$ = this.productsSubject.asObservable();
 
-  /*
-  constructor() {
+  private productUrl = 'http://localhost:3000/products';
+
+  constructor(private http: HttpClient) {
     const initialProducts: Product[] = [];
     this.productsSubject.next(initialProducts);
+    this.updateList();
   }
 
-  addProduct(product: Product) {
-    const currentProducts = this.productsSubject.value;
-    this.productsSubject.next([...currentProducts, product]);
+  updateList(){
+    this.getProducts().subscribe((products) => {
+      this.productsSubject.next(products);
+    });
   }
 
   getProducts() {
-    return this.productsSubject.value;
+      return this.http.get<Product[]>(this.productUrl);
   }
 
-  deleteProduct(id: number): void {
-    const newProductsList = this.productsSubject.value.filter((product) => product.id != id);
-    this.productsSubject.next([...newProductsList]);
+  addProduct(product: Product) {
+    this.http
+      .post<Product>(this.productUrl, product)
+      .subscribe(() => this.updateList());
   }
-*/
 
-private productUrl = "http://localhost:3000/products";
+  deleteProduct(id: String){
+    this.http.delete<void>(`${this.productUrl}/${id}`).subscribe(() => {
+      this.updateList();
+    });
+  }
 
-constructor( private http : HttpClient) { 
-  const initialProducts: Product[] = [];
-  this.productsSubject.next(initialProducts);
-  this.getProducts()
-}
-
-getProducts() {
-  this.http.get<Product[]>(this.productUrl).subscribe(products => {
-    this.productsSubject.next(products);
-  });
-}
-
-addProduct(product: Product) {
-  this.http.post<Product>(this.productUrl, product).subscribe(p => this.getProducts() );
-}  
-
-
-deleteProduct(id: String): void {
-  this.http.delete<void>(`${this.productUrl}/${id}`).subscribe(() => {
-    this.getProducts();
-  });
-}
-
+  searchProduct( keyword : string){
+    this.getProducts().subscribe(p => this.productsSubject.next(p.filter( product => product.name.match(keyword))))
+  }
 }
